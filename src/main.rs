@@ -1,14 +1,12 @@
-// use scanner::generate_tokens;
+use lexer::functions::get_tokens;
 
-use std::fs;
-
-mod scanner;
-mod parser;
+mod lexer;
 
 fn main() {
 
-    let contents = fs::read_to_string("./test.schromp").expect("cant open file");
-    let tokens = scanner::scanner(contents);
-    println!("{:?}", tokens);
+    let input = "let five = 5 ;";
 
+    let tokens = get_tokens(input); 
+
+    println!("{:?}", tokens);
 }

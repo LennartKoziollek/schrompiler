@@ -47,10 +47,14 @@ pub fn scanner(code: String) -> Vec<Token> {
             // string literal
             '"' => {
                 let mut last_matched: char = '\0';
-                let s: String = char_indices.by_ref().take_while(|(_pos, c)| {
-                    last_matched = *c;
-                    *c != '"'
-                }).map(|(_pos, c)| {c}).collect();
+                let s: String = char_indices
+                    .by_ref()
+                    .take_while(|(_pos, c)| {
+                        last_matched = *c;
+                        *c != '"'
+                    })
+                    .map(|(_pos, c)| c)
+                    .collect();
 
                 match last_matched {
                     '"' => Token::StringLiteral(s),
@@ -58,10 +62,10 @@ pub fn scanner(code: String) -> Vec<Token> {
                 }
             }
             // identifier: if
-            'i' => match char_indices.next_if_eq(&(position+1, 'f')) {
+            'i' => match char_indices.next_if_eq(&(position + 1, 'f')) {
                 Some(_if) => Token::If,
                 None => Token::Invalid("do you mean if?".to_string()),
-            }
+            },
             '(' => Token::OpenBracket,
             ')' => Token::CloseBracket,
             '{' => Token::OpenCurlyBracket,
