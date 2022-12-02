@@ -25,7 +25,7 @@ pub fn get_tokens(code: &str) -> Vec<Token> {
                 None => Token::Bang,
             },
             // numbers
-            // token => {}
+            // TODO no whitespace characters behind number possible
             c if char::is_numeric(c) => {
                 let mut last_matched: char = '\0';
                 let number_vec: Vec<u32> = char_indices
@@ -37,15 +37,13 @@ pub fn get_tokens(code: &str) -> Vec<Token> {
                     .map(|(_pos, c)| c.to_digit(10).unwrap())
                     .collect();
 
-                let mut ret_number: u32 = 0;
-                let mut factor: u32 = 1;
+                let mut ret_number: u32 = c.to_digit(10).unwrap();
+                let mut factor: u32 = 10;
 
-                // this is not getting called for some reason
-                for x in number_vec.into_iter().rev() {
-                    ret_number = ret_number + (x * factor);
-                    println!("test {}", ret_number);
-                    factor *= 10;
-                }
+                number_vec.iter().rev().for_each(|x| {
+                    ret_number = ret_number + x * factor;
+                    factor = factor * 10;
+                });
 
                 Token::Int(ret_number)
             }

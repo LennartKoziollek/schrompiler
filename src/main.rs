@@ -4,7 +4,7 @@ mod lexer;
 
 fn main() {
 
-    let input = "let five = 5 ;";
+    let input = "let five = 55;";
 
     let tokens = get_tokens(input); 
 
